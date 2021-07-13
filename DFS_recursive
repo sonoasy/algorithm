@@ -1,0 +1,58 @@
+#include<iostream>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+
+using namespace std;
+
+//dfs recursive 순환호출(인접행렬 or 인접리스트)
+
+//start는 시작 정점 graph는 연결구조 check는 정점 방문 여부 체크
+void dfs(int start, vector<int>graph[],vector<bool> check) {
+	//시작 정점 방문했음을 체크 및 출력
+	check[start] = true; 
+	printf("%d ", start);
+
+	//연결된 모든 지점을 체크&&방문 여부
+	for (int i = 0; i < graph[start].size(); i++) {
+		int next = graph[start][i];
+		//방문되었는지
+		if (check[next] == false) {
+			dfs(next, graph, check);//호출이 모두 끝나야 상위 옆 노드로 감
+		}
+
+	}
+
+
+}
+
+
+
+int main() {
+
+	int n, m, start;
+	cin >> n >> m >> start;
+
+	vector<int>*graph=new vector<int>[n + 1];
+	vector<bool>check(n + 1, false);
+
+	for (int i = 0; i < m; i++) {
+		int u, v;
+		cin >> u >> v;
+
+		//u-v, v-u 모두 체크
+		graph[u].push_back(v);
+		graph[v].push_back(u);
+
+
+	}
+    
+	for (int i = 1; i <= n; i++) {
+		sort(graph[i].begin(), graph[i].end());
+	}
+
+	dfs(start, graph, check);
+	printf("\n");
+
+
+}
