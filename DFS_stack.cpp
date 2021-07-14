@@ -23,7 +23,6 @@ void dfs(int start, vector<int>graph[], vector<bool> check) {
 	//방문한 정점 출력
 	printf("%d", start);
 
-
 	while (!s.empty()) {
 
 		//현재 위치
