@@ -60,6 +60,8 @@ int main() {
 		}
 		else if( start[i]==end[i+1] &&end[i]==start[i+1]){ // 양쪽이 바뀐경우에만 가능
 			answer.push_back('-');
+			//중요!! 업데이트 되면서 비교되어야해서
+			swap(start[i], start[i + 1]);
 		}
 		else {
 			flag=false;
