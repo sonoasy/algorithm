@@ -1,0 +1,83 @@
+.
+#include<iostream>
+#include<vector>
+using namespace std;
+
+//백준 2469번
+int main() {
+
+	int k; //사람 수
+	int n; //가로 줄 수
+	string start,end;//시작,결과 알파벳
+	int index; //찾아야되는 가로줄 인덱스
+	char map[1000][25]; //사다리 정보
+	cin >> k >> n;
+
+	//시작 알파벳 입력 ABCDEFGHIJ
+	for (int i = 0; i < k; i++) {
+		start.push_back('A' + i);
+	}
+	//결과 알파벳
+	cin >> end; 
+
+	//사다리정보 입력받기 *이면 없음 -이면 있음
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < k-1; j++) {
+			cin >> map[n][k];
+			if (map[n][k] == '?') {
+				index = i;
+			}
+
+
+		}
+	}
+
+	//? 전까지 알파벳 바뀌는거 검사
+	for (int i = 0; i < index; i++) {
+		for (int j = 0; j < k - 1; j++) {
+			if (map[i][j] == '-') {
+				//사다리 만날때마다 양쪽 결과 바뀜
+				swap(start[j], start[j + 1]);
+			}
+
+		}
+	}
+	//결과알파벳에서 ?전까지 거슬로 올라가기
+	
+	for (int i = n - 1; i > index; i--) {//줄갯수,인덱스여서 n-1
+		for (int j = 0; j < k - 1; j++) { //길이는 k-1이지만 저장을 0부터 하므로
+			if (map[i][j] == '-') {
+				swap(end[j], end[j + 1]);
+			}
+		}
+	}
+	string answer;
+	//?를 두고 양쪽의 결과 비교에 따라서 같으면 +
+	bool flag = true; //답없으면 false로
+	for (int i = 0; i < k - 1; i++) {
+		if (start[i] == end[i]) { //같으면
+			answer.push_back('*');
+		}
+		else if( start[i]==end[i+1] &&end[i]==start[i+1]){ // 양쪽이 바뀐경우에만 가능
+			answer.push_back('-');
+		}
+		else {
+			flag=false;
+			break;
+		}
+
+	}
+	if (flag == false) {
+		for (int i = 0; i < k - 1; i++) {
+			cout << "x";
+		}
+	}
+	else {
+		cout<<answer;
+	}
+
+
+
+
+
+}
