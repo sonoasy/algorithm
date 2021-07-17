@@ -20,7 +20,6 @@ void init() {
 
 }
 
-
 void dfs(int x, int y ,int min) {  //(x,y)위치부터 시작, 영역 끝나는거 확인
 	
 	for (int i = 0; i < 4; i++) {
