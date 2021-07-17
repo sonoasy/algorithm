@@ -1,0 +1,81 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int n; // 행렬 갯수 2-100
+int map[101][101] = { 0 };  //인접행렬
+int visited[101][101] = { 0}; //방문 체크
+
+//연결정보가 주어져있지 않고 위아래양옆으로 알아서 이동
+//좌표 이동   상하좌우
+int dx[4] = { 0,0,-1,1 };
+int dy[4] = { 1,-1,0,0 };
+void init() {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			visited[i][j] = 0;
+		}
+	}
+
+}
+
+
+void dfs(int x, int y ,int min) {  //(x,y)위치부터 시작, 영역 끝나는거 확인
+	
+	for (int i = 0; i < 4; i++) {
+		
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+			if (map[nx][ny] > min && visited[nx][ny] == 0) {
+				visited[nx][ny]=1; //방문 체크
+				dfs(nx, ny, min); //계속 가기
+				
+
+			}
+
+	}
+
+}
+
+
+int main() {
+  // 백준 2468 DFS 문제
+	int max = 0;
+	int count = 0;
+	cin >> n;
+	for (int i =0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> map[i][j];  //인접 행렬정보 입력
+			if (max < map[i][j]) {
+				max = map[i][j]; //최대 높이 구하기
+			}
+		}
+	}
+	int max1 = 0;
+	
+	vector<int> v;
+	while (max1 <= max) {
+		count = 0; //각각 갯수 세기
+		init();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (map[i][j] > max1 && visited[i][j] ==0) {
+					visited[i][j] ++;
+					dfs(i, j, max1);
+					count++;
+				}
+
+
+			}
+		}
+		v.push_back(count);
+		max1++;
+	}
+
+	cout << *max_element(v.begin(), v.end());
+
+
+	return 0;
+
+}
