@@ -1,0 +1,68 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+const int INF = 988888; 
+int map[271][271] = { 0 };
+int n, m, h; //세로,가로선 갯수, 세로선마다 놓을수 있는 위치 갯수
+int a, b; //가로선 정보
+int ret = 988889999;
+int visited[35][35];
+
+bool check() {
+	for (int i = 1; i <= n; i++) {
+		int start = i;
+		for (int j = 1; j <= h; j++) {
+			if (visited[j][start])start++;
+			else if (visited[j][start - 1])start--;
+
+		}
+		if (start != i)return false;
+	}
+	return true;
+
+
+}
+void go(int here,int cnt) {
+	if (cnt > 3)return;
+	if (check()) {
+		ret=min(ret,cnt);return;
+	}
+	for (int i = here; i <= h; i++) {
+		for (int j = 1; j <= n; j++) {
+			if (visited[i][j] || visited[i][j - 1] || visited[i][j + 1])continue;
+			visited[i][j] = 1;
+			go(i, cnt + 1);
+			visited[i][j] = 0;
+		}
+	}
+
+}
+
+
+int main() {
+
+
+	
+
+	cin >> n >> m >> h;
+	for (int i = 0; i < m; i++) {
+		cin >> a >> b;
+		//사다리 있음
+		map[a][b] = 1;
+
+	}
+	
+	
+	go(1, 0);
+	cout << ((ret == INF) ? -1 : ret);
+
+
+
+
+
+
+
+
+
+
+}
