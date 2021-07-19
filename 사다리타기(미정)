@@ -22,6 +22,7 @@ bool check() {
 
 
 }
+
 void go(int here,int cnt) {
 	if (cnt > 3)return;
 	if (check()) {
