@@ -1,0 +1,36 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main() {
+  //백준 2798 블랙잭
+	int n, m;
+	//카드 종류
+	int c [9999999];
+	int s;
+	cin >> n >> m;
+	
+	for (int i = 0; i < n; i++) {
+		cin >> c[i];
+	}
+	int sum = 0;
+	int max = 0;
+	//카드 n장 합이 m이 되지않지만 가깝도록
+    //3번 다하기
+	for (int i = 0; i < n - 2; i++) {
+		for (int j = i + 1; j < n - 1; j++) {
+			for (int k = j + 1; k < n; k++) {
+				sum = c[i] + c[j] + c[k];
+				if ((sum <= m) && (sum > max)) {
+					max = sum;
+				}
+
+			}
+		}
+	}
+
+	cout << max;
+	return 0;
+
+
+}
