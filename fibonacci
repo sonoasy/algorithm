@@ -1,0 +1,26 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+
+//동적계획법
+int main() {
+	
+	//백준#2747
+	//n번째 피보나치 수 출력하기
+	int n;
+	vector<int> v;
+	v.push_back(0); //0번째 피보나치 수
+	v.push_back(1); //1번째 피보나치 수
+	//bottom-top 방식
+	cin >> n;
+	for (int i = 0; i <=n-2; i++) {
+
+		v.push_back(v[i] + v[i + 1]);
+
+	}
+	cout<< v[n];
+
+
+
+
+}
