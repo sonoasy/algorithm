@@ -8,6 +8,8 @@ int sorted[1000];
 
 void merge(int list[], int left, int mid, int right) {
 	int i, j, k, l;
+	//i는 정렬된 왼쪽리스트의 인덱스, j는 정렬된 오른쪽 리스트의 인덱스
+	//k는 정렬될 최종 리스트에 대한 인덱스
 	i = left; j = mid + 1; k = left;
 
 
@@ -37,8 +39,11 @@ void merge_sort(int list[], int left, int right) {
 	int mid;
 	if (left < right) {
 		mid = (left + right) / 2;
+		//순환 호출이 돌아오면서 정렬됨
+		//분할된 리스트
 		merge_sort(list, left, mid);
 		merge_sort(list, mid + 1, right);
+		//합병
 		merge(list, left, mid, right);
 	}
 }
