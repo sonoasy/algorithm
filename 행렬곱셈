@@ -1,0 +1,81 @@
+#include <iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<stdio.h>
+#define _CRT_SECURE_NO_WARNINGS
+using namespace std;
+int dp[500][500];
+int flag[500] = { 0 };
+int flagind;
+
+int INF = 1000000000;
+int main() {
+	
+	//백준 11049번 동적계획법
+	//행렬 n개가 주어졌을때 곱셈 연산 횟수 최솟값
+	//어느지점일때 최댓값?->마지막 행렬일때
+	int n;
+	cin >> n;
+	int r[500][500];
+	for (int i = 1; i <= n; i++) {
+		cin >> r[i][1] >> r[i][2]; 
+
+	}
+	//top down
+	//이진트리방법
+
+	//down-top
+	for (int i = 1; i < n; i++) {
+		for (int j = 1; i + j <= n; j++) {
+			dp[j][i + j] = INF;
+			for (int k = j; k <= i + j; k++) {
+				dp[j][i + j] = min(dp[j][i + j], dp[j][k] + dp[k + 1][i + j] + r[j][1] * r[k][2] * r[i + j][2]);
+			}
+
+		}
+
+	}
+	
+	cout << dp[1][n];
+	
+
+
+
+	/* 삽질
+	//dp[1]부터 구하기
+	int min = 1000;
+	int min2;
+	for (int i = 0; i <= n - 2; i++) {
+		dp[0] = r[i][1] * r[i+1][1];
+		if (dp[0] < min) {
+			min=dp[0];
+			flagind = i;
+		}
+	}
+	dp[0]=min;
+	flag[flagind] = 1; //여기는 못씀
+	for (int i = 1; i <= n - 1; i++) {
+		min = 1000;
+		for (int j = 0; j <= n - 2; j++) {
+			if (flag[j] == 0) {
+				min2 = r[j][1] * r[j+1][1];
+				if (min2 < min) {
+					min = min2;
+					flagind = j;
+ 
+			    }
+			
+			}
+		}
+		//더하는게 아니라 양옆으로 가는건가..?
+		//left-right
+		dp[i] = dp[i - 1] + min;
+		flag[flagind] = 1;
+	}
+	
+
+
+	cout << dp[1];
+	*/
+}
