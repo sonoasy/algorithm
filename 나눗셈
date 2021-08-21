@@ -1,0 +1,38 @@
+#include<iostream>
+#define MAX 1000000
+using namespace std;
+int a[MAX] = { 0 };//시험장 사람 수
+int main() {
+
+	//백준 13458번
+	int n; //시험장 갯수
+	
+	int b, c;//총감독관 감독수, 부감독관 감독수
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	cin >> b >> c;
+	long long count = 0;
+	//최소로 필요한거, 총감독관은 한명
+	for (int i = 0; i < n; i++) {
+		a[i] -= b;
+		count++;
+		if (a[i] > 0) { //중요!!! 인원수<총감독관 일수 있음 
+			count += (a[i] / c);
+			a[i] = a[i] % c;
+			if (a[i] > 0) {
+				count++;
+			}
+		}
+
+	}
+
+	cout << count;
+
+
+
+
+
+}
