@@ -1,0 +1,107 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define MAX 2000001
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<memory.h>
+#include<string.h>
+using namespace std;
+
+//bool check[MAX + 1] = { false }; //다녀갔는지 체크하는 배열-> start에서 연속으로 저장하면서 진행
+vector<int>graph[MAX + 1];  //인접행렬 저장
+int start[MAX + 1];
+int number[MAX + 1]; //각각 번호당 최소 넘어야되는 숫자
+int current[MAX + 1];
+queue<int> q;   //bfs 실행 큐
+
+void bfs(int start[], int n, vector<int>graph[]) {
+
+
+	//큐에는 다녀간것만 넣음
+	int next;
+
+	while (!q.empty()) {
+
+		//나가면서 주위 감염시킬 후보 찾기
+		int current = q.front(); //큐는 pop 리턴값없음
+
+		q.pop();
+
+		//curtime = time[current];->start로 대체
+
+		for (int j = 0; j < graph[current].size(); j++) { //pop 된 감염요소와 인접하는거 있는지 확인하기
+			    next = graph[current][j]; //pop 된 감염요소와 인접한거 중에 한 요소
+				//지금 큐에 같이 있는건 동시에 전파됨
+				//current에 의해 갯수 하나 감소,모든 큐요소 동시에 체크해야함!!
+				
+				number[next]--;
+				if (start[next]==-1 && number[next] <= 0) {
+					
+					//매우 중요!!! 새로 감염된것만 감염되서 큐에 들어감
+					start[next] = start[current] + 1; //같은 next의 경우 문제가 됨!!
+					q.push(next);
+
+				}
+
+		}
+
+
+	}
+
+
+}
+
+
+int main() {
+
+
+	int s = 1;
+	//주변에 아무도 없을떄도!
+
+
+	int n;//사람 수
+	cin >> n;
+	fill_n(start, MAX + 1, -1);
+	//fill_n(time, MAX + 1, -1);  //start로 통합
+
+	//각 번호별 주변인 번호, 마지막 0
+	for (int i = 1; i <= n; i++) {
+		while (1) { //0인 배열을 만들어서 bfs에서 제외시키기보다는 아예 포함x	
+			cin >> s;
+			if (s == 0)break;
+			graph[i].push_back(s);
+			
+		}
+
+	}
+
+
+	int m;//최초 유포자수
+	cin >> m;
+
+	//최초 유포자 번호
+	for (int i = 0; i < m; i++) {
+		cin >> s;
+		start[s] = 0; // 최초 유포자는 0부터 시작
+		q.push(s); //여기서 바로 큐로 불필요한 루프 삭제
+	}
+
+	for (int i = 1; i <= n; i++) {
+		int around = graph[i].size();
+		number[i] = around % 2 == 0 ? around / 2 : around / 2 + 1;//짝수면 반, 홀수면 +1
+	}
+
+	//처음 믿기 시작한 시기 맞추기
+
+	bfs(start, n, graph);
+
+
+	//출력
+	for (int i = 1; i <= n; i++) {
+		cout << start[i];
+		cout << " ";
+
+	}
+
+}
+
