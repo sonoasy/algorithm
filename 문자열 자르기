@@ -1,11 +1,15 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define MAX 200000
 #include<iostream>
+#include<queue>
 #include<vector>
+#include<memory.h>
 #include<string.h>
 #include<stdio.h>
+#include<list>;
 using namespace std;
 
-vector<string> answer;
+list<string> answer;
 
 int main() {
 	string str;
@@ -48,16 +52,27 @@ int main() {
 
 
 	}
+	int count2 = 0;
+	printf("[");
+	for (string val : answer) {
+		if (val == "") {
+			cout << "\"";
+			cout << "\"";
+			count2++;
+		}
+		else {
+			cout << "\"";
+			cout << val;
+			cout << "\"";
+			count2++;
+		}
+		if (count2 != answer.size()) {
+			cout << ",";
+		}
+		
 
-	for (int i = 0; i < answer.size(); i++) {
-		cout << answer[i];
-		if (answer[i] == "") {
-			cout << "A" ;
-		}
-		if (i != answer.size() - 1) {
-			cout << '\n';
-		}
 	}
+	cout << "]";
 
 
 
