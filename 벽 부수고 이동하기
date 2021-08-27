@@ -1,0 +1,111 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<string.h>
+#include<stdio.h>
+#include<queue>
+#include<vector>
+#define MAX 1001
+
+using namespace std;
+
+typedef struct point{
+	int x;
+	int y;
+	int broke;
+
+}point;
+string array2[MAX] ;
+int visited[MAX][MAX][2] = { 0, };
+int go[MAX][MAX][2] = { 0 };
+//상하좌우
+int tmpx[4] = { 0,0,-1,1 };
+int tmpy[4] = { 1,-1,0,0 };
+
+
+int main() {
+	
+	
+	
+    //백준 2206 
+	int n, m;//nXm 행렬
+	cin >> n >> m;
+	//1부터
+	string s;
+	
+	//행렬 입력, 0~n-1 /0~m-1
+	for (int i = 0; i < n; i++) {
+		cin >> array2[i];
+	}
+   
+	//bfs 실행하기 위한 큐, 저장해야하는 정보 : x,y 좌표
+	queue<point> q;
+	//첫번째 좌표= 0,0 마지막좌표=n-1,m-1
+	//첫번쨰 좌표 큐에 넣기
+	point p1; p1.x = 0; p1.y = 0; p1.broke = 0;
+	q.push(p1);
+	int crash = 0;
+	visited[0][0][0] = 1;
+	
+	while (!q.empty()) {
+
+		point current;
+		current.x = q.front().x;
+		current.y = q.front().y;
+		current.broke = q.front().broke;
+		q.pop();
+		
+		if (current.x == (n - 1) &&current.y ==( m - 1)) {
+
+			cout<<visited[n-1][m-1][current.broke];
+			return 0;
+		}
+
+		//큐에서 나온 좌표 주변을 탐색, 큐에는 갈수 있는데만 들어감
+		for (int i = 0; i < 4; i++) {
+			point next;
+			next.x = current.x + tmpx[i];
+			next.y = current.y + tmpy[i];
+			next.broke = current.broke;
+			//갔던데는 큐에 안들어감 -> 메모리초과됨
+			
+			
+			if (next.x < n && next.x >= 0 && next.y < m && next.y >= 0 &&go[next.x][next.y][next.broke]==0) {
+				
+				//벽 1 이 아니면 가기  -부수고 0으로 가는경우와 부수지 않고 가는 경우
+				if (array2[next.x][next.y] == '0' ) {
+					
+					go[next.x][next.y][next.broke] = 1;
+					visited[next.x][next.y][next.broke] = visited[current.x][current.y][current.broke] + 1;
+					
+					q.push(next);
+				
+				}
+				//벽인 경우 부순 횟수가 0일떄만 벽뚫고 가기 가기 
+				if (array2[next.x][next.y] == '1' && next.broke == 0) {
+			
+					go[next.x][next.y][next.broke +1] =1; //+1!!!
+					visited[next.x][next.y][next.broke +1] = visited[current.x][current.y][current.broke] + 1;
+					next.broke++;
+					
+					q.push(next);
+					
+				}
+
+			}
+			
+
+		}
+		
+		
+
+	}
+	//아니면
+	cout << -1;
+	//최단거리는 bfs라면 각 구간에서 최단거리임
+	
+
+
+}
+
