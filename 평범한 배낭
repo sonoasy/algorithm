@@ -1,0 +1,49 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+
+#define MAX 110
+using namespace std;
+int weight[MAX];
+int value[MAX];
+//dp 정하는 기준
+//bottom-up, top-down(재귀)
+int dp[MAX][100010];
+int main() {
+	
+	//백준 12865 
+	
+	int n, k;//물품수, 버틸수 있는 무게
+	cin >> n >> k;
+
+	//물품당 무게, 가치 
+	for (int i = 1; i <= n; i++) {
+		cin >> weight[i] >> value[i];
+	}
+	
+	//버틸수 있는 무게 내에서 최대 가치
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= k; j++) {//무게가 j인것
+			//i번째 무게가 j인것 -> 무게를 일정하게 정해버려서 어려웠던것!!!포함할것에 따라 빼기        
+			if (j - weight[i] >= 0) {  //i번째 포함할지 말지, 포함 안하거나 포함하면 그전단계 에서 무게뺴고 더하기 
+				dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weight[i]] + value[i]);
+			}
+			else {
+				dp[i][j] = dp[i - 1][j];//그대로
+
+			}
+
+
+		}
+	}
+
+	cout << dp[n][k];
+
+
+
+
+
+
+}
+
