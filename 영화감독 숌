@@ -1,0 +1,50 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+
+#define MAX 10000
+
+using namespace std;
+
+
+int main() {
+	
+	//백준 1436 
+	//종말의 숫자 666(6이 최소 3개 이상 연속으로 들어감) , n번쨰로 작은 종말의 숫자
+	int n;
+	cin >> n;
+	int num = 665;
+	int count = 0;
+
+	while (1) {
+
+	
+		
+		if (count == n) {
+			cout << num;
+			break;
+		}
+		
+		num++;   //666
+		int tmp = num;
+		while (tmp > 0) {
+			if (tmp % 1000 == 666) {
+				count++; //
+				break;
+			}
+			 
+			tmp = tmp / 10;
+
+		}
+
+	}
+
+
+
+
+
+
+
+}
+
