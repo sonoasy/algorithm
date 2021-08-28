@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+#define MAX 501
+using namespace std;
+
+int arr[MAX][MAX];
+int answer = 0;
+int m, n;
+int dx[4] = { 0,0,1,-1 };
+int dy[4] = { 1,-1,0,0 }; 
+int visited[MAX][MAX] = { 0 };
+int dp[MAX][MAX];
+
+//top down 방식
+int go(int x, int y) {//(x,y)에서 도착점까지 갯수
+	if (x == m && y == n ) {  //종점이면 1개 (단순 dfs면 갯수하나 추가이지만 반대로 시작점으로 더해감)
+		//answer++;
+		return 1;
+	}
+	if (visited[x][y]) { return dp[x][y]; }  //다녀간데면 값이 밑에서 부여될테고 dp값 리턴
+	visited[x][y] = 1;//아니면 다녀감
+	//int flagx = 0;
+	//int flagy = 0;
+	
+	//단순 DFS면 시간초과, dp[i][j]는 여
+	int tmpx, tmpy; //상하좌우중 가장 값 작은데로
+	
+	
+	for (int i = 0; i < 4; i++) {
+		tmpx = x + dx[i];
+		tmpy = y + dy[i];
+		if (tmpx > 0 && tmpx <= m && tmpy > 0 && tmpy <= n) {
+			if (arr[x][y] > arr[tmpx][tmpy]) { //지금보다 낮은데로
+				dp[x][y]+=go(tmpx, tmpy); //여기까지 구현했는데 덧셈 점화식!!!
+			}
+		}
+		
+
+	}
+	return dp[x][y];
+}
+
+
+
+
+int main() {
+	
+	//백준 1520
+	
+	cin >> m >> n; //세로 가로
+	
+	for (int i = 1; i <= m; i++) {
+		for (int j = 1; j <= n; j++) {
+			cin >> arr[i][j];
+		}
+	}
+
+	//낮은 데로만 도착하는 길 갯수 구하기
+	
+	cout << go(1, 1);
+	
+
+
+
+
+}
+
