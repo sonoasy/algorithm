@@ -1,0 +1,55 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<string.h>
+#include<stdio.h>
+#include<queue>
+#include<vector>
+#define MAX 1000000
+
+using namespace std;
+
+
+int main() {
+	
+	//백준 2231 가장 작은 생성자 구하기
+	int n;
+	cin >> n;
+	int min=MAX;
+	int flag=0;
+	for (int i = n-1; i >0; i--) {
+		int sum = 0;
+		sum += i;
+		int j = i;
+		while (j >= 0) {
+			sum += j % 10;
+			j = j / 10;
+			if (j <= 0) {
+				break;
+			}
+		
+		}
+	
+		if (sum==n) { //생성자가 되면
+			if (i < min) {
+				min = i;
+				
+			}
+		}
+		else {
+			continue;
+		}
+	}
+	if (min == MAX) {
+		cout << 0;
+	}
+	else {
+		cout << min;
+	}
+
+
+
+
+}
+
