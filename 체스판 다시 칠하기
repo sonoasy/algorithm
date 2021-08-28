@@ -1,0 +1,78 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<string.h>
+#include<stdio.h>
+#include<queue>
+#include<vector>
+#define MAX 1000000
+
+using namespace std;
+
+
+int main() {
+	
+	//백준 1018 
+	int m, n;
+	cin >> m >> n;
+
+	string chess[50];
+
+	
+	for (int i = 0; i < m; i++) {
+		cin >> chess[i];
+	}
+	int min2 = 100000;
+	int min3;
+	//다시 칠해야할 최소 갯수 구하기
+	//시작점을 정해서 8X8 탐색
+	
+	for (int i = 0; i <= m-8; i++) {
+		for (int j = 0; j <= n-8; j++) {
+			int x = i; int y = j; //(x,y)에서 시작, 가능한 범위 내에서 
+			int count1 = 0;
+			int count2 = 0;
+			for (int k = x; k < x + 8; k++) {
+				for (int s = y; s < y +8; s++) {
+					//체스판에서는 r,c 합으로 구함
+						
+					if ((k + s) % 2 == 0) {
+						if (chess[k][s] == 'B') {
+							count1++;  //wbwb순
+						}
+						else {
+							count2++;//bwbw순
+						}
+					}
+					else {
+						if (chess[k][s] == 'B') {
+							count2++;
+						}
+						else {
+							count1++;
+						}
+					}
+
+
+
+				}
+			}
+
+			min2 = min(min2, count1);
+			min2 = min(min2, count2);
+
+		}
+		
+	}
+
+	printf("%d", min2);
+
+
+
+
+
+
+
+}
+
