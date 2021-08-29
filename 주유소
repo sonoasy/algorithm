@@ -6,7 +6,7 @@ int adj[MAX] = { 0 };
 int  money[MAX] = { 0 };
 int main()
 {  
-   //동적계획법 vs 그리다
+   //동적계획법 vs 그리디
    //백준 13305
 	int n;
 	cin >> n;
