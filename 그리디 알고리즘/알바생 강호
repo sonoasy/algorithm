@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+#define MAX 100002
+using namespace std;
+
+vector<int> arr;
+
+bool compare(int i, int j) {
+	return i>j;
+}
+int main() {
+	
+	ios::sync_with_stdio(false);
+	//백준 1758
+	
+	int n,e;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> e;  //원래 주려고 했던 팁
+		arr.push_back(e);
+	}
+	//팁 최대로 받기 위해 정렬순서
+	//돈이 많을수록 앞으로 
+	sort(arr.begin(), arr.end(),compare);
+	long long sum = 0; //오버플로우 방지!!!!
+	for (int i = 0; i < n; i++) {
+		int tmp= (arr[i] - (i));
+		if (tmp < 0) {
+			continue;
+		}
+		else {
+			sum += tmp;
+		}
+	}
+	cout << sum;
+
+
+
+}
+
