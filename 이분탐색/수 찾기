@@ -1,0 +1,89 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+#define MAX 100002
+using namespace std;
+
+vector<int> a;
+
+int check(int start, int end,int e) {
+	if (start > end) {
+		return 0;
+	}
+	else {
+		int mid = (start + end) / 2;
+		if (e == a[mid]) {
+			return 1;
+		}
+		//if (start+1== end && e!=a[start] && e != a[end])cout << 0 << '\n';
+		else if (e < a[mid]) {
+			return check(start, mid - 1, e);
+		}
+		else {
+			return check(mid + 1, end, e);
+		}
+
+		
+	}
+
+}
+
+
+
+
+int main() {
+	
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	//백준 1920
+	int n,e;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >>e;
+		a.push_back(e);
+	}
+	sort(a.begin(), a.end());
+	
+	int m,s;
+	cin >> m;
+	for (int i = 0; i < m; i++) {
+		cin >> s;
+		if (s > a[n - 1]) {
+			cout << 0 << '\n';
+			continue;
+		}
+		cout << check(0, n - 1, s)<<'\n';
+		/*if (e == a[mid]) {
+			cout << 1 << '\n';
+			continue;
+		}
+		if (e < a[mid]) {
+			check(0, mid-1,e);
+		}
+		else {
+			check(mid + 1, n - 1,e);
+		}
+		*/
+	}
+	
+	//시간초과
+	/*for (int i = 0; i < m; i++) {
+		cin >> s;
+		if (find(a, a + n, s) != a + n) {
+			cout << 1<<'\n';
+		}
+		else {
+			cout << 0 << '\n';
+		}
+
+	}
+	*/
+
+
+
+}
+
