@@ -23,8 +23,8 @@ int main() {
 		person.push_back(s);
 	}
 
-	//각 사람이 돈을 인출하는데 필요한 시간의 합 쵷소값
-	sort(person.begin(), person.end());
+	//각 사람이 돈을 인출하는데 필요한 시간의 합 최소값
+	sort(person.begin(), person.end()); //빨리 끝나는 사람 먼저 가기 
 	int sum = 0;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j <= i; j++) {
