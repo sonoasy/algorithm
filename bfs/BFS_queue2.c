@@ -93,7 +93,7 @@ void bfs(Graph *g,int v){
     for(w-0;w<g->n;w++)
       if(g->adj[v][w] &&!visited[w]){
         visited[w]=TRUE;
-        printf("%d 방문->",ㅈ);
+        printf("%d 방문->",w);
         enequeue(&q,w);
       }
   }
