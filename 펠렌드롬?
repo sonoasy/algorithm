@@ -1,0 +1,78 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+#include<vector>
+#include<memory.h>
+#define MAX 2001
+using namespace std;
+
+int arr[MAX];
+int start;
+int endp;
+int vis[MAX][MAX]; //st-ed가 펠렌드롬인지
+//메모리 잡아먹는거
+//길이 1,2,3
+int check(int st, int ed) {
+	
+	//시간초과, 이미 체크한덴 하지 말아야함
+	//dfs로 st와 ed가 같은 값이면  answer 추가해서 하려고 했는데-> 제약조건을 찾아서 제외시켜야함
+		
+		if (st >= ed) {
+			return 1;
+
+
+		}
+		//짝수일떄!! 이부분 중요
+		else if (st + 1 == ed) {
+			if (arr[st] == arr[ed]) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+		if (vis[st][ed] >= 0)return vis[st][ed]; //이미 계산된건 전역변수 vis의 값을 쓰기
+
+
+
+
+
+		if (arr[st] == arr[ed]) {
+			return vis[st][ed] = check(st + 1, ed - 1);
+		}
+		else {
+			return 0;
+		}
+	
+
+	
+	
+}
+
+
+
+int main() {
+	
+	ios::sync_with_stdio(false);
+	memset(vis, -1, sizeof(vis));
+	//백준 10942번 
+	//펠린드롬이면 1, 아니면 0
+	int n,m;
+	int front, back;
+
+	cin >> n;//배열 정보
+	for (int i = 1; i <= n; i++) {
+		cin >> arr[i];
+	}
+	cin >> m; //펠렌드롬 찾는것
+	for (int i = 1; i <= m; i++) {
+		cin >> start >> endp; //배열로 하면 메모리 초과 
+		printf("%d\n", check(start, endp)); 
+		
+	}
+
+
+
+}
+
