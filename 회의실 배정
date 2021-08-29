@@ -1,0 +1,75 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+#define MAX 100000
+using namespace std;
+
+int start[MAX]; //시작시간
+int ed[MAX]; //끝나는 시간
+//시간초과
+vector<pair<int, int>> meet;
+
+
+
+int main() {
+	
+	ios::sync_with_stdio(false);
+	//백준 1931 
+	//회의실 고정 1개
+	int n;//회의 갯수 
+	int s, e;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> s >> e;
+		meet.push_back(make_pair(e, s)); //e를 기준으로 정렬됨
+	}
+	//할수 있는 배정 회의수 최대갯수 
+	sort(meet.begin(), meet.end());
+
+
+
+	//빨리 끝나는 기준 정렬 -> 시간초과
+	/*for (int i = n - 1; i >= 0; i--) {
+		for (int j = 0; j <= i; j++) {
+			if (ed[j] > ed[j + 1]) {
+				swap(ed[j], ed[j + 1]);
+				swap(start[j], start[j + 1]);
+			}
+			else if (ed[j] == ed[j + 1]) { //같으면 시작시간 빠른걸로
+				if (start[j] > start[j + 1]) {
+					swap(ed[j], ed[j + 1]);
+					swap(start[j], start[j + 1]);
+				}
+			}
+
+		}
+	}
+	*/
+
+	//회의실 배정
+	//시간 체크
+	int time;
+	int count = 0;
+	count++;
+	time = meet[0].first;
+	for (int i = 1; i < n; i++) {
+		if (meet[i].second >= time) {
+			time = meet[i].first;
+			count++;
+		}
+
+	}
+	cout << count;
+
+
+
+
+
+
+
+
+}
+
