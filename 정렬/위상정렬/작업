@@ -1,0 +1,51 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<vector>
+#include<queue>
+#define MAX 10004
+using namespace std;
+
+
+vector<int> a[MAX];
+int dp[10001] = { 0 };
+
+int main() {
+	
+	//백준 2056 모두 완료하기 위해 최소 소요시간
+	int n;
+	cin >> n;
+	int time;
+	int num;
+	int cnt;
+	int value;
+	//1번부터 n번까지 각각 소요시간, 시작전 완료되어야 하는 갯수, 그 번호들 
+	//-> 순서를 정해서 위상정렬로 소요시간 정하는지 알았는데 선행관계 정보로 선후관계를 단정 지을수 없음
+	
+	
+	for (int i = 1; i <= n; i++) {
+		cin >> time >> cnt; //소요시간, 선행 노드 갯수
+		if (cnt == 0) {
+			dp[i] = time;
+			continue;
+		}
+		int maxt = 0;
+		for (int j = 0; j < cnt; j++) {
+			cin >> value;
+			maxt = max(maxt, dp[value]); //선행관계니까 선행관계중 소요시간 더 오래걸리는거로
+		}
+		dp[i] = time + maxt; //자기 자신과 더하기
+	}
+
+	//cout << dp[n]; //뒷번호라고 마지막이 아님!!
+	int max = 0;
+	for (int i = 1; i <= n; i++) {
+		if (max < dp[i]) {
+			max = dp[i];
+		}
+
+	}
+	cout << max;
+
+	
+}
+
