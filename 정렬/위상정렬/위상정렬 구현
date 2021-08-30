@@ -1,0 +1,72 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<vector>
+#include<queue>
+#define MAX 10
+using namespace std;
+
+//진입차수, 해당 점으로 앞에서 연결되는거 있으면 추가하기
+//큐에서 들어가기 위해선 선행 원소들이 모두 다녀가야됨(indegree==0)
+int indegree[MAX] = { 0 };
+//각 지점에서 뒤로 연결된 지점
+vector<int> a[MAX];
+
+
+void topology(int n) {
+
+	queue<int> q;
+	//진입차수가 0인것만 큐에 들어가고, 인접한 위치에 진입차수 0인거 큐에 들어가게 하기
+	for (int i = 1; i <= n; i++) {
+		if (indegree[i] == 0) {
+			q.push(i);
+		}
+	}
+	while (!q.empty()) {
+		int current = q.front();
+		q.pop();
+		cout << current << ' ';
+		//인접한 노드
+		for (int i = 0; i < a[current].size(); i++) {
+			//지금 노드가 다녀갔으므로 연결된 노드 전입차수 줄여주기
+			indegree[a[current][i]]--;
+			
+			//진입차수 0이면 큐에 들어감
+			if (indegree[a[current][i]] == 0) {
+				q.push(a[current][i]);
+			}
+		}
+
+
+	}
+	
+
+
+
+}
+
+
+
+
+int main() {
+   //위상정렬 큐로 구현
+	int n;
+	n = 7;
+	//그래프 정보     
+	a[1].push_back(2);
+	indegree[2]++;
+	a[1].push_back(5);
+	indegree[5]++;
+	a[2].push_back(3);
+	indegree[3]++;
+	a[3].push_back(4);
+	indegree[4]++;
+	a[4].push_back(6);
+	indegree[6]++;
+	a[5].push_back(6);
+	indegree[6]++;
+	a[6].push_back(7);
+	indegree[7]++;
+	
+	topology(7);
+}
+
