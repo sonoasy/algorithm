@@ -1,0 +1,75 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<string.h>
+#include<string>
+#include<stdio.h>
+#include<vector>
+#include<algorithm>
+#define MAX 1000002
+
+
+using namespace std;
+vector<int> v;
+vector<int> a;
+int main() {
+   
+	//백준 18870번
+	int n,s;
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> s;
+		v.push_back(s);
+		a.push_back(s);
+	}
+	sort(v.begin(), v.end());
+	//중복 제거하기 
+	v.resize(unique(v.begin(), v.end()) - v.begin());
+	//v.erase(unique(v.begin(), v.end()),v.end());
+
+	for (int i = 0; i < a.size(); i++) {
+		auto find = lower_bound(v.begin(), v.end(), a[i]);
+		cout << find - v.begin()<<' '; //주소값을 반환하므로
+
+	}
+
+
+
+	//작은 서로다른 갯수!!!
+	/* 시간초과
+	for (int i = 0; i < a.size(); i++) {
+		int count = 0;
+		int flag;
+		if (v[0] < a[i]) {
+			check[0] = true;
+			count++;
+		}
+
+
+		for (int j = 1; j <v.size(); j++) {
+			if (v[j] == v[j - 1] && check[j-1]) {
+				check[j] = true;
+				continue;
+			}
+
+			if (v[j] < a[i]) {
+				check[j] = true;
+				count++;
+			}
+			else {
+				cout << count<<" ";
+				break;
+			}
+		}
+	}
+	*/
+
+
+
+
+
+
+
+
+
+}
+
