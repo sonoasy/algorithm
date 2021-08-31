@@ -1,0 +1,65 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<vector>
+
+
+using namespace std;
+int a[10];
+
+int counts;
+int m, n;
+int check[10] = { 0 };
+//dfs 완전 탐색
+void go(int start) {
+
+	if (start == m) {
+		for (int i = 0; i < start; i++) {
+			cout << a[i] << ' ';
+		}
+		cout << '\n';
+		return;
+	}
+
+
+	for (int i = 1; i <= n; i++) {
+
+		//counts = 0;
+		//a[counts] = i;
+		//counts = counts + 1;
+		//check[i] = 1;
+		//for (int j = i+1 ; j <= n; j++) {
+
+		if (!check[i]) {
+			check[i] = 1;
+			a[start] = i;
+			//start++; 값은 냅둬야함
+			go(start+1);
+			check[i] = 0;  //중요!!	
+		}
+		
+
+
+
+
+
+	}
+
+}
+
+
+
+int main() {
+	ios_base::sync_with_stdio(0); 
+	cin.tie(0);
+
+	//백준 15649
+
+	cin >> n >> m;  //1부터 까지 자연수 중에서 m개를 고른 수열 , 증가하는 수열
+	go(0);
+
+
+	
+	
+	
+}
+
