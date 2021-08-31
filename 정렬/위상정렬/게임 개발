@@ -1,0 +1,119 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+#include<vector>
+#include<queue>
+#define MAX 503
+using namespace std;
+
+
+vector<int> a[MAX];
+int dp[10001] = { 0 };
+int indegree[MAX] = { 0 };
+int times[MAX];
+int time;
+int c,e;
+int maxt;
+int main() {
+	ios_base::sync_with_stdio(0); 
+	cin.tie(0);
+
+	//백준 1516
+	int  n;// 건문 수
+	cin >> n;
+	//1-n당 소요시간, 먼저지어져야하는 건물 번호, 끝은 -1
+    //각 건물이 지어지기 위해 필요한 최소 소요 시간
+
+	for (int i = 1; i <= n; i++)
+	{
+		cin >> time;
+		times[i] = time;
+
+
+		while (1) {
+
+			cin >> e;
+			if (e == -1) {
+				break;
+			}
+
+			indegree[i]++;
+			a[e].push_back(i);
+
+
+		}
+	}
+	queue<int> q;
+	for (int i = 1; i <= n; i++) {
+			if (indegree[i] == 0) {
+				q.push(i);
+			}
+	}
+
+	while (!q.empty()) {
+
+		int current = q.front();
+		q.pop();
+
+
+		for (int i = 0; i < a[current].size(); i++) {
+				indegree[a[current][i]]--;
+
+				dp[a[current][i]] = max(dp[a[current][i]], times[current] + dp[current]);
+
+				if (indegree[a[current][i]] == 0) {
+					q.push(a[current][i]);
+				}
+		}
+
+
+	}
+
+	
+
+	for (int i = 1; i <= n; i++) {
+		cout << dp[i]+times[i] << '\n';
+	}
+
+
+	/*  왜 틀렷지
+	for (int i = 1; i <= n; i++) {
+		cin >> time;
+		cin >> e;
+		if (e == -1) {
+			dp[i] = time;
+			continue;
+		}
+		maxt = 0;
+		while (e != -1) {
+			
+			
+			maxt = max(maxt, dp[e]);
+			cin >> e;
+				
+
+		}
+		dp[i] = time + maxt;
+		
+	}
+	for (int i = 1; i <= n; i++) {
+		cout << dp[i] << '\n';
+	}
+
+	*/ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+}
+
