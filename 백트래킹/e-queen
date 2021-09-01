@@ -1,0 +1,63 @@
+#include <iostream>
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+using namespace std;
+
+int n;
+int xy[100][100];
+int col[100];
+int count=0;
+int X[10000];
+int Y[10000];
+
+bool check(int lev){
+	
+	for(int i=0;i<lev;i++){
+		if(col[i]==col[lev] || abs(col[lev]-col[i])==(lev-i) ){
+			return false;
+		}
+		//if(xy[col[lev]][lev]==1)return false; 여기서 이걸 추가하면 안됨!!
+	}
+	return true;
+	
+}
+
+
+void nqueen(int lev){
+    
+	if(lev==n){
+		count++;
+		
+	}
+	else{
+		
+		for(int i=0;i<n;i++){
+			if(xy[lev][i]==1)continue; //안되면 체크, i가 col[lev]가 아니라 지금 지정하려고 고르는거임
+			col[lev]=i;
+			if(check(lev)){
+         nqueen(lev+1);
+			}
+		}
+	
+	}
+}
+
+
+ int main(void) {
+	int k;
+	cin>>n;
+	cin>>k;
+	for(int i=0;i<k;i++){
+		cin>>X[i];
+	}
+	for(int i=0;i<k;i++){
+		cin>>Y[i];
+	}
+	for(int i=0;i<k;i++){
+		xy[X[i]-1][Y[i]-1]=1;  //정보 
+	}  
+  nqueen(0);
+  cout<<count;
+	return 0;
+}
