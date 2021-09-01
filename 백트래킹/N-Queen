@@ -1,0 +1,63 @@
+#include<iostream>
+#define MAX 15 
+using namespace std;
+
+int answer = 0;
+int n;
+int col[MAX]; 
+
+bool check(int level) {
+
+	for (int i = 0; i < level; i++) { //이전 행들에 대해서 
+		//지금 col[level]에 저장된 열위치와 같은게 있거나 사방의 대각선 위치에 있으면 못둠
+		if (col[i] == col[level] || (level-i)==abs(col[level]-col[i])) {
+			return false;
+		}
+
+
+	}
+	return true;
+
+}
+
+
+void nqueen(int level) {
+
+	if (level == n) {//0부터 시작했으므로
+		answer++;  
+	}
+	else {
+		 //해당열에 놓을 준비
+		for (int i = 0; i < n; i++) {
+			col[level] = i; //level의 열 위치는 i
+			if (check(level)) { //해당 행에 놓을 수 있으면 그다음 행으로
+				nqueen(level + 1);
+
+			}
+
+
+
+		}
+
+
+	}
+
+
+}
+
+
+int main() {
+
+
+	cin >> n;
+
+	nqueen(0); //(0행부터 시작)
+
+	cout << answer;
+
+
+
+
+
+
+}
