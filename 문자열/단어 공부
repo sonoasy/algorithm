@@ -1,0 +1,55 @@
+#include<iostream>
+#include<stdio.h>
+#include<string>
+#include<cctype>
+#define MAX 1000001
+using namespace std;
+int num[26] = { 0 };
+string s;
+int main() {
+
+	//백준 1157
+	
+	cin >> s;
+	//단어에서 가장 많이 쓰인 글자 찾아내기 
+
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] < 97) {
+			char e = tolower(s[i]);
+		    int j = e -'a';
+		    num[j]=num[j]+1;
+			
+		}
+		else {
+			num[s[i] - 97]++;
+		}
+		
+
+
+	}
+	int max = 0;
+	int flag=0;
+	for (int i = 0; i < sizeof(num)/sizeof(num[0]); i++) {
+
+		if (num[i] > max) {
+			max = num[i];
+			flag = i;
+		}
+		
+
+	}
+	for (int i = 0; i < sizeof(num) / sizeof(num[0]); i++) {
+
+		if (num[i] == max && i!=flag) {
+			cout << '?';
+			return 0;
+		}
+
+
+	}
+
+	cout<<(char) toupper('a' + flag);
+	
+	return 0;
+
+}
