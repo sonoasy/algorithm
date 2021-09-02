@@ -1,0 +1,22 @@
+#include<iostream>
+
+using namespace std;
+
+
+int main() {
+
+
+	char a;
+	cin >> a;
+	printf("%d", a);
+
+ //A = 65 , a= 97, 0 (문자)= 48   순서로 저장할때 (문자) -'A' 이런식으로 사용하기
+
+
+
+
+
+
+
+
+}
