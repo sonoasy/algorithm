@@ -1,0 +1,101 @@
+#include<iostream>
+#define MAX 3^7
+
+using namespace std;
+int** arr;
+//int arr[MAX][MAX];
+int zero = 0;
+int one = 0;
+int minuss = 0;
+
+void check(int x, int y, int len) {
+	int num = arr[x][y];
+
+	//1일떄 추가
+	if (len == 1) {
+		if (num == -1) {
+			minuss++;
+		}
+		else if (num == 0) {
+			zero++;
+		}
+		else if (num == 1) {
+			one++;
+		}
+		return;
+	}
+
+
+
+
+	for (int i = x; i < x+len; i++) {
+		for (int j = y; j < y+len; j++) {
+			if (arr[i][j] != num) {
+
+
+				//변수 정확하게 쓰기 num이아니라 len임!!!
+				
+				check(x, y, len / 3);
+				check(x, y+ len / 3, len / 3);
+				check(x, y+ (len / 3)*2, len / 3);
+
+				check(x+ len / 3, y , len / 3);
+				check(x+ len / 3, y + len / 3, len / 3);
+				check(x+ len / 3, y + (len / 3)*2, len / 3);
+
+				check(x+ (len / 3) * 2, y , len / 3);
+				check(x + (len / 3) * 2, y + len / 3, len / 3);
+				check(x+ (len / 3) * 2, y + (len / 3) * 2, len / 3);
+			
+				return;
+			}
+			
+			
+		}
+	}
+	if (num ==-1) {
+		minuss++;
+	}
+	else if (num == 0) {
+		zero++;
+	}
+	else if (num == 1) {
+		one++;
+	}
+	return;
+
+
+}
+
+int main() {
+
+	//백준 1780
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
+	
+	//-1,0,1
+	//9개로 자름
+	int n;
+	cin >> n;
+
+	//동적 할당하기!!! 배열 오류 생김
+	arr = (int**)malloc(sizeof(int*) * n);
+	for (int i = 0; i < n; i++)
+		arr[i] = (int*)malloc(sizeof(int) * n);
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> arr[i][j];
+
+		}
+	}
+	
+	check(0, 0, n);
+	cout <<minuss << '\n';
+	cout << zero<< '\n';
+	cout << one << '\n';
+
+
+}
