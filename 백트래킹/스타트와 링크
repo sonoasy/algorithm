@@ -1,0 +1,88 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+int n;
+int arr[21][21];
+int flag[21] ;
+int mins = 100000000000;
+void go(int num,int idx) { //현재 정할 팀원 번호
+
+
+	//팀을 중복되게 짜면 안됨!!!!!!!!
+
+
+	if (num == n/2) {
+		int start=0, link=0;
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				if (flag[i] == 1 && flag[j] == 1) {
+					
+						start += arr[i][j];
+						//cout << "start selected:"<<i << ' ' << j<<'\n';
+					
+					
+					
+				}
+				if (flag[i] == 0 && flag[j] == 0) {
+				
+						link += arr[i][j];
+					
+					
+				}
+				
+
+			}
+		}
+	
+		int result = abs(start - link);
+		if (mins > result) {
+			mins = result;
+			
+		}
+
+		return;
+
+	}
+	//오름차순으로 탐색해서 중복 없애기
+	for (int i = idx; i < n; i++) {
+
+		if (flag[i] == 0) {
+			flag[i] = 1;
+			//오름차순으로만 탐색하게 해서 중복 없애기
+			go(num + 1,i+1);  //변수 이름 주의,시간초과 방지하기 위해서 나 다음만 생각
+			flag[i] = 0;
+			
+		}
+		
+		
+	}
+	return;
+}
+
+
+int main() {
+	//백준 14889번
+	
+	ios_base::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+	//스타트팀, 링크 팀
+	//스타트팀과 링크 팀 능력치 최소화하기
+
+	cin >> n; //n은 짝수임
+	//memset(flag, n + 1, 0);
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			cin >> arr[i][j];   //arr 나 - 같은 팀내다른팀원
+
+		}
+	}
+
+
+	//스타팀 먼저 선정, 나머지는 링크팀
+	go(0,1);
+	
+	cout << mins;
+
+
+}
