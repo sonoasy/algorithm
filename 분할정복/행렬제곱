@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+long long n, b;
+long long arr[5][5];
+long long result[5][5];
+long long temp[5][5];
+
+void mult(long long a1[5][5], long long a2[5][5]) {
+
+	//곱하고 1000으로 나누기
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++) {
+			temp[i][j] = 0;
+			for (int k = 0; k < n; k++)
+				temp[i][j] += (a1[i][k] * a2[k][j]);
+			temp[i][j] %= 1000;
+		}
+	//최종값 a에 저장
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			a1[i][j] = temp[i][j];
+
+
+}
+void check(long long num) {
+	if (num == 1) {
+		return; //거듭제곱 1개는 아무것도 안함
+	}
+	if (num % 2 == 1) { //홀수면
+		num /= 2;
+		check(num); //2분의 1이 된 값을
+		mult(result, result); //거듭제곱하기
+		mult(result, arr); // 하나 곱하기
+		
+	}
+	//짝수면 4-> 2*2 
+	else {
+		num /= 2;
+		check(num);
+		mult(result, result);
+		
+	}
+
+
+}
+
+int main() {
+	//백준 10830번
+	
+	ios_base::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+
+	cin >> n >> b;
+	long long t;
+	//행렬 작으니 동적할당 안해도 됨
+	for (long long i = 0; i < n; i++) {
+		for (long long j = 0; j < n; j++) {
+			cin >> t;
+			arr[i][j] = t%1000;  //1000보다 같은것도 있을수 있으니까 조심
+			result[i][j] = arr[i][j];
+		}
+	
+	}
+	
+	check(b);
+	//출력
+	for (long long i = 0; i < n; i++) {
+		for (long long j = 0; j < n; j++)
+			cout << result[i][j] << ' ';
+		cout << endl;
+	}
+
+	return 0;
+}
