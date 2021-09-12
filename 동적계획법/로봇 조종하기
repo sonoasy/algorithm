@@ -1,0 +1,95 @@
+#include<iostream>
+#include<string>
+#include<string.h>
+#include<algorithm>
+#define MAX 1001
+
+int arr[MAX][MAX];
+using namespace std;
+
+int dp[MAX][MAX];
+
+int Right[MAX];
+int Left[MAX];
+//왼쪽, 오른쪽, 아래
+int dx[3] = { -1,1,0 };
+int dy[3] = { 0,0,1 };
+
+int main() {
+	//백준 2169번
+	int n, m;
+	cin >> n >> m;
+	//nxm 
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			cin >> arr[i][j];
+		}
+	}
+	
+	//왼,오,아래로밖에 못움직임 (1,1)에서 (n,m)으로 갔을떄 최댓값
+	//memset(dp, 0, sizeof(dp));
+	//첫째줄은 왼쪽에서 오는거밖에 안됨
+
+	dp[1][1] = arr[1][1];
+	for (int i = 2; i <= m; i++) {
+		dp[1][i] = dp[1][i - 1] + arr[1][i];
+	}
+
+	//두번쨰줄부터 마지막줄까지
+	for (int i = 2; i <=n; i++)
+	{
+
+		//한방향으로밖에 길게 탐색하려면 못감(쭝복 방지)
+		// 맨 왼쪽 = > 오른쪽으로 검사
+
+		//두번째 줄의 맨왼쪽 값 -위에서 내려오는게 일단
+		Right[1] = dp[i - 1][1] + arr[i][1];
+
+
+		for (int j = 1; j <= m - 1; j++) {
+			Right[j + 1] = max(Right[j], dp[i - 1][j + 1]) + arr[i][j + 1];
+		}
+
+			
+		
+
+		// 맨 오른쪽 = > 왼쪽으로 검사
+		Left[m] = dp[i - 1][m] + arr[i][m];
+
+
+		for (int j = m - 1; j >= 1; j--)
+			Left[j] = max(Left[j + 1], dp[i - 1][j]) + arr[i][j];
+
+		// Right배열과 Left배열중 큰 값 dp에 저장
+		for (int k = 1; k <=m; k++)
+			dp[i][k] = max(Right[k], Left[k]);
+	}
+	cout << dp[n][m];
+
+
+	/*
+
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+
+			
+			for (int k = 0; k < 3; k++) {
+				int tmpx = i + dx[k];
+				int tmpy = j + dy[k];
+
+				if (tmpx >= 1 && tmpx <= n && tmpy >= 1 && tmpy <= m) {
+
+					dp[tmpx][tmpy] = max(dp[tmpx][tmpy], arr[tmpx][tmpy] + dp[i][j]);
+
+
+				}
+
+			 }
+
+		}
+	}
+	*/
+
+
+
+}
