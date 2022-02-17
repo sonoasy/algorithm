@@ -72,6 +72,6 @@ vector<vector<int>> solution(vector<vector<int>>sudoku){
 	vector<vector<int>> answer(9, vector<int>(9, 0));  // 정답 = 현재의 상태를 저장하는 배열
 	sudoku2=sudoku;
   go(0);
-	  
+	   
   return sudoku2;
 }
