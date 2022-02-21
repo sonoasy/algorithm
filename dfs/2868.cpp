@@ -9,13 +9,16 @@ int dr[4] = { 0,0,-1,1 };
 int dc[4] = { 1,-1,0,0 };
 
 typedef pair<int, int> ci;
+//탐색하면서 치즈가 녹을수 있으면 바로녹이고 dfs vs 리스트에 담아서 나중에 처리하고 dfs 차이는 녹을수 있는지를 확인하는것!!! 녹이고 주위 공기 갱신하는건 
 
-void dfs(int n, int m, int r, int c) {
+void dfs(int n, int m, int r, int c) { //dfs를 치즈가 녹을때마다 모든 격자를 탐색하는걸로 생각했는데 이미 갱신이 되었으므로 치즈가 녹은 주변만 새로 갱신하면 됨 
 
+	
 	if (r < 0 || r >= n || c < 0 || c >= m || b[r][c] != 0) return;
 
 	b[r][c] = -1;
 	for (int i = 0; i < 4; i++) {
+		//if (r+dr[i] >= 0 && r+dr[i] < n && c+dc[i] >= 0 && c+dc[i] < m && b[r+dr[i]][c+dc[i]] == 0){ 이렇게 해도됨
 		dfs(n, m, r + dr[i], c + dc[i]);
 
 	}
