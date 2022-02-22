@@ -1,16 +1,16 @@
 #include<iostream>
 #include<vector>
 #include<deque>
-
+#include<map>
 using namespace std;
 
 vector<vector<int>> s;
 vector<pair<int, char>>p;
 deque<pair<int, int>>ss;
-
+map<int, char> m;
 //오른쪽,왼쪽의 의미는 단순히 오른쪽/왼쪽이 아니라 현재 기준 방향 전환!!
-int dr[4] = { -1,0,1,1 }; //하좌상우
-int dc[4] = { 0,-1,0,0 }; 
+int dr[4] = { 1,0,-1,0 }; //하좌상우
+int dc[4] = { 0,-1,0,1 }; 
 
 //오른쪽 전환:하->좌->상->우   +1 %4 
 //왼쪽 전환:하<-좌<-상<-우
@@ -45,7 +45,7 @@ int main() {
 	while(l--){
 		cin >> x >> c;
 		p.emplace_back(x, c);
-	
+		m[x] = c;
 	}
 	int times = 0;
 	
@@ -55,41 +55,39 @@ int main() {
 
 	int dir = 3;
 
-	ss.emplace_back(curr, curc);
+	ss.push_front({ curr, curc });
 	s[curr][curc] = 1;
 
 	while (1) {
 
-		
+		times++; //움직이고 멈추는걸 고려해서 앞에 있어야함!!
 
 		//뱀의 머리 방향으로 머리 한칸 움직이기
 		
 		curr = curr + dr[dir];
-		curc = curc + dc[dir];
+		curc = curc+ dc[dir];
 
 		if (curr < 0 || curr >= n || curc < 0 || curc >= n || s[curr][curc]==1)break;  //+ 자기 자신과 부딪힐떄
 		
-		s[curr][curc] = 1;
-		d[curr][curc] = dir;
-		ss.push_front({ curr,curc });
-
+		
 		//사과 유무
-		if (s[curr][curc] == 2) {
+		if (s[curr][curc] != 2) {
 			//사과 없애기
-			s[curr][curc] = 0;
-		}
-		else {//사과 없으면 꼬리 위치 없애기 
+			//s[curr][curc] = 0; 0아님!!!
+		//사과 없으면 꼬리 위치 없애기 
 
 			int lr = ss.back().first;
 			int lc = ss.back().second;
-			//s[lr][lc] = 1; 0이 아님!!!!
+			s[lr][lc] = 0;//
 			ss.pop_back();
 
 			//꼬리 위치 갱신하기
 			//꼬리 앞 몸통 위치를 알려면 단순히 체크하는거로는 안됨 
 
 		}
-
+		s[curr][curc] = 1;
+		d[curr][curc] = dir;
+		ss.push_front({ curr,curc });
 
 		//방향 바꾸기 
 		for (int i = 0; i < p.size(); i++) {
@@ -102,7 +100,15 @@ int main() {
 				}
 			}
 		}
-		times++;
+		
+		/*if (m[times] == 'L') {
+			dir = (dir + 3) % 4;
+		}
+		else if (m[times] == 'D') {
+			dir = (dir + 1) % 4;
+		}
+		*/
+		//times++;
 	}
 	cout << times;
 	
