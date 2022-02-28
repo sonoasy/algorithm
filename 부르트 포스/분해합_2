@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+
+//가장 작은 생성자 리턴
+int solution(int n) {
+    int answer = 0; //n이면 시간초과뜸
+	
+    for(int i=1;i<n;i++){
+			int sum=0;
+			int s=i;
+			sum+=s;
+			
+			//i기 계속바뀌는 문제, i는 그대로, s로 연산
+			while(s!=0){
+				sum+=(s%10);
+				s/=10;
+				
+			}
+			if(sum==n){
+				//if(answer>i)answer=i; //가장 앞에서 생성되면 자동으로 작은숫자
+				answer=i;
+				break;
+			}
+			
+		}
+	
+    return answer;
+} 
+
