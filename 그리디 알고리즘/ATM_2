@@ -1,0 +1,27 @@
+#include<iostream>
+#include<vector> // vector 이용
+#include<algorithm> // sort 이용
+using namespace std;
+//본 시험에서는 solution 코드와 별도로 필요한 함수만 작성합니다.
+int solution(vector<int>& time, int n) {
+
+	sort(time.begin(),time.end());
+	int answer=0;
+	/*for(int i=1;i<n;i++){
+		
+		time[i]+=time[i-1];
+		
+	}
+	for(int i=0;i<n;i++){
+		answer+=time[i];
+	}
+	*/
+	//시간복잡도 더 줄이는법
+	for(int i=0;i<n;i++){
+		answer+=time[i]*(n-i);		
+		
+	}
+	
+	return answer;
+}
+
