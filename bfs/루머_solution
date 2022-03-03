@@ -12,7 +12,7 @@ vector<int> solution(int N, vector<vector<int>> adj, int M, vector<int> first_In
 	//루머를 믿기까지 필요한 시간
 	for (int i = 1; i <= N; i++) {
 
-		if (adj[i].size() % 2 == 1) { //홀수이면
+		/*if (adj[i].size() % 2 == 1) { //홀수이면
 
 			time[i] =( adj[i].size() / 2)+1;
 
@@ -22,6 +22,8 @@ vector<int> solution(int N, vector<vector<int>> adj, int M, vector<int> first_In
 			time[i] = adj[i].size() / 2;
 
 		}
+		*/
+		time[i] = adj[i].size() / 2; // adj 배열에 0이 들어가서 짝수,홀수 모두 그냥 /2 해야함
 	}
 
 	for (int i = 0; i < M; i++) {
@@ -59,10 +61,8 @@ vector<int> solution(int N, vector<vector<int>> adj, int M, vector<int> first_In
 	}
 	
 
-
-
-
 	return answer;
+
 }
 
 int main() {
