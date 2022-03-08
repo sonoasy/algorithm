@@ -1,0 +1,98 @@
+#include <string>
+#include <vector>
+#include <queue>
+#include<iostream>
+
+using namespace std;
+
+int dr[4] = { 0,0,1,-1 };
+int dc[4] = { 1,-1,0,0 };
+
+vector<vector<int>> solution(int rows, int cols, int max_virus, vector<vector<int>> queries) {
+    vector<vector<int>> answer(rows, vector<int>(cols, 0)); //세균 상태
+    vector<vector<int>> time(rows, vector<int>(cols, 0)); //시간 저장 
+    queue<pair<int,int>> q;
+    //쿼리 큐에 모두 넣음
+    for (int i = 0; i < queries.size(); i++) {
+        int r = queries[i][0];
+        int c = queries[i][1];
+
+        q.push({ r,c });
+    }
+    int t = 0;
+   while (!q.empty()) { //큐에는 세균 증식을 할 위치가 담겨 있음
+
+        //규칙: max면 상하좌우 퍼트림, 아니면 +1 
+        int curr = q.front().first;
+        int curc = q.front().second;
+        q.pop();
+        t++;
+        
+
+        time[curr - 1][curc - 1] = t;
+
+        //max보다 작으면 +1 시킴
+        if (answer[curr - 1][curc - 1] < max_virus)answer[curr - 1][curc - 1]++;
+        
+        else if (answer[curr - 1][curc - 1] == max_virus) {
+
+            for (int i = 0; i < 4; i++) {
+                int nextr = curr + dr[i];
+                int nextc = curc + dc[i];
+                
+                //범위내에 있는지 확인
+                //문제: 연쇄적으로 퍼져야되는데 그걸 어떻게..?
+                //쿼리 한개씩, 주변에 있으면 퍼뜨리기 
+                if (nextr >= 0 && nextr < rows && nextc >= 0 && nextc < cols) {
+                    q.push({ nextr,nextc }); //세균 증식할것 
+                    //max보다 작으면 +1,
+                   /* if (answer[nextr][nextc] < max_virus)answer[nextr][nextc]++;
+                    else if (answer[nextr][nextc] == max_virus) {
+
+
+                        //주변을 또 탐색함 , 무한반복..? 
+                       for (int j = 0; j < 4; j++) {
+                            int nextrr = nextr + dr[j];
+                            int nextcc = nextc + dc[j];
+                            if (nextrr >= 0 && nextrr < rows && nextcc >= 0 && nextcc < cols) {
+                                q.push({ nextrr, nextcc });
+                            }
+                            
+                        }
+                        
+
+                    }
+                    */
+                }
+               
+            }
+
+        }
+
+
+    }
+   
+    return answer;
+}
+
+int main() {
+
+    int rows = 3;
+    int columns = 4;
+    int max_virus = 2;
+
+    vector<vector<int>>queries = { {3,2},{3,2},{2,2},{3,2},{1,4},{3,2},{2,3},{3,1} };
+    
+    vector<vector<int>>res = solution(rows, columns, max_virus, queries);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            cout << res[i][j];
+        }
+        cout << '\n';
+    }
+   
+
+
+
+    return 0;
+}
