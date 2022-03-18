@@ -20,7 +20,7 @@ int dfs(int r,int c,vector<vector<int>> picture,int num){
         if(nr>=0 && nr<m1 && nc>=0 && nc<n1 && !visited[nr][nc] && picture[nr][nc]==cur){
           visited[nr][nc]=1;
           
-          num=dfs(nr,nc,picture,num+1);      
+          num=dfs(nr,nc,picture,num+1);   //재귀 리턴   
             
         } 
       
